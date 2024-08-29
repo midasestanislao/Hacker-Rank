@@ -1,22 +1,27 @@
-import re
-def fun(s):
-    first, second, string = s.split(';')
-    words = re.sub('[A-Z]', lambda x: ' ' + x.group(), string).strip().split()
+import sys
 
-    if first == 'S':
-        words = [word.lower() for word in words]
-    elif first == 'C':
-        if second == 'M':
-            words[0] = words[0].lower()
-            string += '()'
-        elif second == 'V':
-            words[0] = words[0].lower()
-        elif second == 'C':
-            words = [word.capitalize() for word in words]
+def camel_case(line):
+    y = line[2:3]
+    arr = list(line[4:])  
+    if line[:1] == 'S':
+        for i, char in enumerate(arr):
+            if char.isupper():  
+                arr[i] = ' ' + char.lower() 
+        if y == 'M':
+            print(''.join(arr)[:-2])
+        else:
+            print(''.join(arr).lstrip()) 
+    else: # if x == c
+        for i, char in enumerate(arr):
+            if char == ' ':
+                arr[i+1] = arr[i+1].upper()
+        if y == 'M':
+            print(''.join(arr).replace(' ', '') + '()')
+        else:
+            if y == 'C':
+                arr[0] = arr[0].upper()
+            print(''.join(arr).replace(' ', ''))
 
-    print(' '.join(words))
-
-if __name__ == "__main__":
-    while True:
-        S = input().strip()
-        fun(S)
+for line in sys.stdin:
+    line = line.strip()
+    camel_case(line)
