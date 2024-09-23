@@ -1,0 +1,2 @@
+SELECT SUM(POPULATION) FROM CITY
+WHERE CITY.District = 'California'
